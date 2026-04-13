@@ -1,5 +1,9 @@
 package core.basesyntax;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import core.basesyntax.io.CsvFileReader;
 import core.basesyntax.io.CsvFileReaderImpl;
 import core.basesyntax.io.FileWriter;
@@ -18,9 +22,6 @@ import core.basesyntax.service.impl.ReportGeneratorImpl;
 import core.basesyntax.service.impl.ReturnOperation;
 import core.basesyntax.service.impl.ShopServiceImpl;
 import core.basesyntax.service.impl.SupplyOperation;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
 

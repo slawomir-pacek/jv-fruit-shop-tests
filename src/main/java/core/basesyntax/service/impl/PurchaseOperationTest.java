@@ -6,7 +6,10 @@ import java.util.Map;
 import org.junit.jupiter.api.Assertions;
 import org.testng.annotations.Test;
 
- class PurchaseOperationTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+class PurchaseOperationTest {
 
     private final PurchaseOperation operation = new PurchaseOperation();
 
@@ -21,7 +24,7 @@ import org.testng.annotations.Test;
 
         operation.process(tx, storage);
 
-        Assertions.assertEquals(15, storage.get("banana"));
+        assertEquals(15, storage.get("banana"));
     }
 
     @Test
@@ -33,7 +36,7 @@ import org.testng.annotations.Test;
         tx.setFruit("banana");
         tx.setQuantity(10);
 
-        Assertions.assertThrows(RuntimeException.class,
+        assertThrows(RuntimeException.class,
                 () -> operation.process(tx, storage));
     }
 }

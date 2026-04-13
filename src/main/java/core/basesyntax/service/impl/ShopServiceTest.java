@@ -21,7 +21,7 @@ class ShopServiceTest {
         handlers.put(FruitTransaction.Operation.RETURN, new ReturnOperation());
 
         OperationStrategy strategy = new OperationStrategyImpl(handlers);
-        ShopServiceImpl service = new ShopServiceImpl(strategy);
+        final ShopServiceImpl service = new ShopServiceImpl(strategy);
 
         FruitTransaction t1 = new FruitTransaction();
         t1.setOperation(FruitTransaction.Operation.BALANCE);

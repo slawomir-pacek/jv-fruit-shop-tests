@@ -1,11 +1,11 @@
-package core.basesyntax.service.impl;
-
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.OperationHandler;
 import core.basesyntax.service.OperationStrategy;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import core.basesyntax.service.impl.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

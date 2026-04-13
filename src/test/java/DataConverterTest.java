@@ -1,7 +1,7 @@
-package core.basesyntax.service.impl;
-
 import core.basesyntax.model.FruitTransaction;
 import java.util.List;
+
+import core.basesyntax.service.impl.DataConverterImpl;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

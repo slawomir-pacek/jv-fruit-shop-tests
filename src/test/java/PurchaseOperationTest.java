@@ -1,8 +1,8 @@
-package core.basesyntax.service.impl;
-
 import core.basesyntax.model.FruitTransaction;
 import java.util.HashMap;
 import java.util.Map;
+
+import core.basesyntax.service.impl.PurchaseOperation;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

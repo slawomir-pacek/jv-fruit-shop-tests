@@ -1,11 +1,10 @@
 package core.basesyntax.service.impl;
 
-import core.basesyntax.model.FruitTransaction;
-import org.junit.jupiter.api.Assertions;
-import org.testng.annotations.Test;
-
 import java.util.HashMap;
 import java.util.Map;
+import core.basesyntax.model.FruitTransaction;
+import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
 
  class PurchaseOperationTest {
 

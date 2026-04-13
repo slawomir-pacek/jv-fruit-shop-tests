@@ -1,8 +1,8 @@
 package core.basesyntax.service.impl;
 
+import java.util.Map;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.OperationHandler;
-import java.util.Map;
 
 public class PurchaseOperation implements OperationHandler {
 

@@ -21,8 +21,6 @@ class ShopServiceTest {
         handlers.put(FruitTransaction.Operation.PURCHASE, new PurchaseOperation());
         handlers.put(FruitTransaction.Operation.RETURN, new ReturnOperation());
 
-        OperationStrategy strategy = new OperationStrategyImpl(handlers);
-
         FruitTransaction t1 = new FruitTransaction();
         t1.setOperation(FruitTransaction.Operation.BALANCE);
         t1.setFruit("banana");
@@ -33,6 +31,7 @@ class ShopServiceTest {
         t2.setFruit("banana");
         t2.setQuantity(30);
 
+        OperationStrategy strategy = new OperationStrategyImpl(handlers);
         ShopServiceImpl service = new ShopServiceImpl(strategy);
         service.process(List.of(t1, t2));
 

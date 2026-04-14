@@ -3,10 +3,10 @@ package basesyntax;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-import java.util.HashMap;
-import java.util.Map;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.PurchaseOperation;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class PurchaseOperationTest {

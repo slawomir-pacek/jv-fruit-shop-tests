@@ -2,10 +2,10 @@ package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.HashMap;
-import java.util.Map;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.BalanceOperation;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.Test;
 
 class BalanceOperationTest {

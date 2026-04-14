@@ -2,9 +2,9 @@ package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.List;
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.DataConverterImpl;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 
 class DataConverterTest {

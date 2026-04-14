@@ -1,8 +1,8 @@
 package mate.academy.fruitshop.service;
 
-import mate.academy.fruitshop.model.FruitTransaction;
 import java.util.List;
 import java.util.Map;
+import mate.academy.fruitshop.model.FruitTransaction;
 
 public interface ShopService {
     void process(List<FruitTransaction> transactions);

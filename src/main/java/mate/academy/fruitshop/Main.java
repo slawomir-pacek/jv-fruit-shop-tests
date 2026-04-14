@@ -1,5 +1,8 @@
 package mate.academy.fruitshop;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import mate.academy.fruitshop.io.CsvFileReader;
 import mate.academy.fruitshop.io.CsvFileReaderImpl;
 import mate.academy.fruitshop.io.FileWriter;
@@ -18,9 +21,6 @@ import mate.academy.fruitshop.service.impl.ReportGeneratorImpl;
 import mate.academy.fruitshop.service.impl.ReturnOperation;
 import mate.academy.fruitshop.service.impl.ShopServiceImpl;
 import mate.academy.fruitshop.service.impl.SupplyOperation;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class Main {
 
@@ -33,7 +33,6 @@ public class Main {
         List<String> input = reader.read(INPUT_FILE);
 
         DataConverter converter = new DataConverterImpl();
-        List<FruitTransaction> transactions = converter.convertToTransaction(input);
 
         Map<FruitTransaction.Operation, OperationHandler> handlers = new HashMap<>();
         handlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
@@ -44,6 +43,7 @@ public class Main {
         OperationStrategy strategy = new OperationStrategyImpl(handlers);
 
         ShopService shopService = new ShopServiceImpl(strategy);
+        List<FruitTransaction> transactions = converter.convertToTransaction(input);
         shopService.process(transactions);
 
         ReportGenerator reportGenerator =

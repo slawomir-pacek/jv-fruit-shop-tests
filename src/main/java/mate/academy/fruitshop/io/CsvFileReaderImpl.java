@@ -23,9 +23,12 @@ public class CsvFileReaderImpl implements CsvFileReader {
             int lineIndex = 0;
 
             while ((line = reader.readLine()) != null) {
-                if (lineIndex++ == HEADER_INDEX) {
+                if (lineIndex == HEADER_INDEX) {
+                    lineIndex++;
                     continue;
                 }
+
+                lineIndex++;
 
                 if (!line.isBlank()) {
                     result.add(line.trim());

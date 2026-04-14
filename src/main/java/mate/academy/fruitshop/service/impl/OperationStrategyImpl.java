@@ -1,9 +1,9 @@
 package mate.academy.fruitshop.service.impl;
 
+import java.util.Map;
 import mate.academy.fruitshop.model.FruitTransaction;
 import mate.academy.fruitshop.service.OperationHandler;
 import mate.academy.fruitshop.service.OperationStrategy;
-import java.util.Map;
 
 public class OperationStrategyImpl implements OperationStrategy {
 

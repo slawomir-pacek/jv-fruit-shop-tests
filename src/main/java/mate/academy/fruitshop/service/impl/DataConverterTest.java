@@ -1,8 +1,8 @@
 package mate.academy.fruitshop.service.impl;
 
-import mate.academy.fruitshop.model.FruitTransaction;
 import java.util.List;
 import org.junit.jupiter.api.Test;
+import mate.academy.fruitshop.model.FruitTransaction;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class DataConverterTest {

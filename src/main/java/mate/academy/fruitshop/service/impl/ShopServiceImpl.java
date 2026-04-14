@@ -1,11 +1,11 @@
 package mate.academy.fruitshop.service.impl;
 
-import mate.academy.fruitshop.model.FruitTransaction;
-import mate.academy.fruitshop.service.OperationStrategy;
-import mate.academy.fruitshop.service.ShopService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import mate.academy.fruitshop.model.FruitTransaction;
+import mate.academy.fruitshop.service.OperationStrategy;
+import mate.academy.fruitshop.service.ShopService;
 
 public class ShopServiceImpl implements ShopService {
 

@@ -1,7 +1,7 @@
 package mate.academy.fruitshop.service.impl;
 
-import mate.academy.fruitshop.service.ReportGenerator;
 import java.util.Map;
+import mate.academy.fruitshop.service.ReportGenerator;
 
 public class ReportGeneratorImpl implements ReportGenerator {
 

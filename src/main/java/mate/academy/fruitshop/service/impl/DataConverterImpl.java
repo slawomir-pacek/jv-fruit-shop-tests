@@ -1,9 +1,9 @@
 package mate.academy.fruitshop.service.impl;
 
-import mate.academy.fruitshop.model.FruitTransaction;
-import mate.academy.fruitshop.service.DataConverter;
 import java.util.ArrayList;
 import java.util.List;
+import mate.academy.fruitshop.model.FruitTransaction;
+import mate.academy.fruitshop.service.DataConverter;
 
 public class DataConverterImpl implements DataConverter {
 

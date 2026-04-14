@@ -1,13 +1,10 @@
 package mate.academy.fruitshop.service.impl;
 
-import mate.academy.fruitshop.model.FruitTransaction;
-
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import mate.academy.fruitshop.model.FruitTransaction;
 
 class BalanceOperationTest {
 
@@ -16,6 +13,7 @@ class BalanceOperationTest {
     @Test
     void shouldSetInitialValue() {
         Map<String, Integer> storage = new HashMap<>();
+
         storage.put("apple", 50);
 
         FruitTransaction tx = new FruitTransaction();

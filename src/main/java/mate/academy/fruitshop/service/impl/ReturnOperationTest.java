@@ -1,10 +1,11 @@
 package mate.academy.fruitshop.service.impl;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.Test;
 import mate.academy.fruitshop.model.FruitTransaction;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ReturnOperationTest {
 

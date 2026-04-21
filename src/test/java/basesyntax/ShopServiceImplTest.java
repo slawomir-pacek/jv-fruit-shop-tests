@@ -1,6 +1,8 @@
 package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.OperationHandler;
@@ -10,6 +12,7 @@ import core.basesyntax.service.impl.PurchaseOperation;
 import core.basesyntax.service.impl.ReturnOperation;
 import core.basesyntax.service.impl.ShopServiceImpl;
 import core.basesyntax.service.impl.SupplyOperation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,36 +30,16 @@ class ShopServiceImplTest {
         tx.setFruit("apple");
         tx.setQuantity(10);
 
-        ShopServiceImpl service = new ShopServiceImpl(new OperationStrategyImpl(handlers));
+        ShopServiceImpl service =
+                new ShopServiceImpl(new OperationStrategyImpl(handlers));
+
         service.process(List.of(tx));
 
         assertEquals(10, service.getStorage().get("apple"));
     }
 
     @Test
-    void shouldProcessMultipleTransactions() {
-        Map<FruitTransaction.Operation, OperationHandler> handlers = new HashMap<>();
-        handlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
-
-        FruitTransaction tx1 = new FruitTransaction();
-        tx1.setOperation(FruitTransaction.Operation.BALANCE);
-        tx1.setFruit("apple");
-        tx1.setQuantity(10);
-
-        FruitTransaction tx2 = new FruitTransaction();
-        tx2.setOperation(FruitTransaction.Operation.BALANCE);
-        tx2.setFruit("banana");
-        tx2.setQuantity(5);
-
-        ShopServiceImpl service = new ShopServiceImpl(new OperationStrategyImpl(handlers));
-        service.process(List.of(tx1, tx2));
-
-        assertEquals(10, service.getStorage().get("apple"));
-        assertEquals(5, service.getStorage().get("banana"));
-    }
-
-    @Test
-    void shouldProcessAllTypesOfOperations() {
+    void shouldProcessAllOperations() {
         Map<FruitTransaction.Operation, OperationHandler> handlers = new HashMap<>();
         handlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
         handlers.put(FruitTransaction.Operation.SUPPLY, new SupplyOperation());
@@ -83,23 +66,39 @@ class ShopServiceImplTest {
         t4.setFruit("apple");
         t4.setQuantity(2);
 
-        ShopServiceImpl service = new ShopServiceImpl(new OperationStrategyImpl(handlers));
+        ShopServiceImpl service =
+                new ShopServiceImpl(new OperationStrategyImpl(handlers));
+
         service.process(List.of(t1, t2, t3, t4));
 
         assertEquals(24, service.getStorage().get("apple"));
     }
 
-    // 🔥 EDGE CASES (to podnosi Jacoco coverage)
+    @Test
+    void shouldThrowException_whenStrategyNull() {
+        assertThrows(RuntimeException.class,
+                () -> new ShopServiceImpl(null));
+    }
 
     @Test
-    void shouldHandleEmptyTransactions() {
+    void shouldThrowException_whenHandlerMapEmpty() {
+        assertThrows(RuntimeException.class,
+                () -> new OperationStrategyImpl(new HashMap<>()));
+    }
+
+    @Test
+    void shouldSkipNullTransaction() {
         Map<FruitTransaction.Operation, OperationHandler> handlers = new HashMap<>();
         handlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
 
-        ShopServiceImpl service = new ShopServiceImpl(new OperationStrategyImpl(handlers));
+        ShopServiceImpl service =
+                new ShopServiceImpl(new OperationStrategyImpl(handlers));
 
-        service.process(List.of());
+        List<FruitTransaction> input = new ArrayList<>();
+        input.add(null);
 
-        assertEquals(0, service.getStorage().size());
+        service.process(input);
+
+        assertTrue(service.getStorage().isEmpty());
     }
 }

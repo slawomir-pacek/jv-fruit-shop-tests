@@ -68,4 +68,12 @@ class DataConverterImplTest {
         assertThrows(RuntimeException.class,
                 () -> converter.convertToTransaction(input));
     }
+
+    @Test
+    void convert_shouldThrowException_whenQuantityIsNotNumber() {
+        List<String> input = List.of("b,banana,abc");
+
+        assertThrows(RuntimeException.class,
+                () -> converter.convertToTransaction(input));
+    }
 }

@@ -6,24 +6,47 @@ import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.BalanceOperation;
 import java.util.HashMap;
 import java.util.Map;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BalanceOperationTest {
+    private static final String APPLE = "apple";
+    private static final int INITIAL_BALANCE = 50;
+    private static final int NEW_BALANCE = 100;
 
-    private final BalanceOperation operation = new BalanceOperation();
+    private BalanceOperation operation;
+    private Map<String, Integer> storage;
+
+    @BeforeEach
+    void setUp() {
+        operation = new BalanceOperation();
+        storage = new HashMap<>();
+    }
 
     @Test
-    void shouldSetInitialValue() {
-        Map<String, Integer> storage = new HashMap<>();
+    void process_validTransaction_shouldSetNewBalance() {
+        storage.put(APPLE, INITIAL_BALANCE);
 
-        storage.put("apple", 50);
+        FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
 
-        FruitTransaction tx = new FruitTransaction();
-        tx.setFruit("apple");
-        tx.setQuantity(100);
+        operation.process(transaction, storage);
 
-        operation.process(tx, storage);
+        assertEquals(NEW_BALANCE, storage.get(APPLE));
+    }
 
-        assertEquals(100, storage.get("apple"));
+    @Test
+    void process_newFruit_shouldAddFruitToStorage() {
+        FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
+
+        operation.process(transaction, storage);
+
+        assertEquals(NEW_BALANCE, storage.get(APPLE));
+    }
+
+    private FruitTransaction createTransaction(String fruit, int quantity) {
+        FruitTransaction transaction = new FruitTransaction();
+        transaction.setFruit(fruit);
+        transaction.setQuantity(quantity);
+        return transaction;
     }
 }

@@ -1,6 +1,7 @@
 package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.OperationHandler;
@@ -18,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ShopServiceTest {
+
     private static final String BANANA = "banana";
     private static final String APPLE = "apple";
 
@@ -36,13 +38,9 @@ class ShopServiceTest {
     }
 
     @Test
-    void process_balanceAndPurchaseOperations_shouldUpdateStorageCorrectly() {
-        FruitTransaction balance = createTransaction(
-                FruitTransaction.Operation.BALANCE, BANANA, 100
-        );
-        FruitTransaction purchase = createTransaction(
-                FruitTransaction.Operation.PURCHASE, BANANA, 30
-        );
+    void process_balanceAndPurchase_shouldDecreaseStock() {
+        FruitTransaction balance = create(FruitTransaction.Operation.BALANCE, BANANA, 100);
+        FruitTransaction purchase = create(FruitTransaction.Operation.PURCHASE, BANANA, 30);
 
         service.process(List.of(balance, purchase));
 
@@ -50,30 +48,54 @@ class ShopServiceTest {
     }
 
     @Test
-    void process_multipleOperations_shouldHandleDifferentFruitsCorrectly() {
-        FruitTransaction bananaBalance = createTransaction(
-                FruitTransaction.Operation.BALANCE, BANANA, 50
-        );
-        FruitTransaction bananaSupply = createTransaction(
-                FruitTransaction.Operation.SUPPLY, BANANA, 20
-        );
-        FruitTransaction appleBalance = createTransaction(
-                FruitTransaction.Operation.BALANCE, APPLE, 40
-        );
-
+    void process_multipleOperations_shouldHandleDifferentFruits() {
         service.process(List.of(
-                bananaBalance,
-                bananaSupply,
-                appleBalance
+                create(FruitTransaction.Operation.BALANCE, BANANA, 50),
+                create(FruitTransaction.Operation.SUPPLY, BANANA, 20),
+                create(FruitTransaction.Operation.BALANCE, APPLE, 40)
         ));
 
         assertEquals(70, service.getStorage().get(BANANA));
         assertEquals(40, service.getStorage().get(APPLE));
     }
 
-    private FruitTransaction createTransaction(FruitTransaction.Operation operation,
-                                               String fruit,
-                                               int quantity) {
+    @Test
+    void process_return_shouldIncreaseStock() {
+        service.process(List.of(
+                create(FruitTransaction.Operation.BALANCE, BANANA, 50),
+                create(FruitTransaction.Operation.RETURN, BANANA, 10)
+        ));
+
+        assertEquals(60, service.getStorage().get(BANANA));
+    }
+
+    @Test
+    void process_supplyWithoutBalance_shouldAddFruit() {
+        service.process(List.of(
+                create(FruitTransaction.Operation.SUPPLY, APPLE, 30)
+        ));
+
+        assertEquals(30, service.getStorage().get(APPLE));
+    }
+
+    @Test
+    void process_purchaseWithoutBalance_shouldThrowException() {
+        assertThrows(RuntimeException.class,
+                () -> service.process(List.of(
+                        create(FruitTransaction.Operation.PURCHASE, BANANA, 10)
+                )));
+    }
+
+    @Test
+    void process_emptyList_shouldDoNothing() {
+        service.process(List.of());
+
+        assertEquals(0, service.getStorage().size());
+    }
+
+    private FruitTransaction create(FruitTransaction.Operation operation,
+                                    String fruit,
+                                    int quantity) {
         FruitTransaction transaction = new FruitTransaction();
         transaction.setOperation(operation);
         transaction.setFruit(fruit);

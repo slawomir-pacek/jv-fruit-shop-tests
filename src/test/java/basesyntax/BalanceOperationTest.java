@@ -49,4 +49,17 @@ class BalanceOperationTest {
         transaction.setQuantity(quantity);
         return transaction;
     }
+
+    @Test
+    void process_shouldInitializeNewFruit() {
+        Map<String, Integer> storage = new HashMap<>();
+
+        FruitTransaction tx = new FruitTransaction();
+        tx.setFruit("apple");
+        tx.setQuantity(10);
+
+        operation.process(tx, storage);
+
+        assertEquals(10, storage.get("apple"));
+    }
 }

@@ -16,24 +16,39 @@ public class DataConverterImpl implements DataConverter {
         List<FruitTransaction> result = new ArrayList<>();
 
         for (String line : data) {
-            if (line == null || line.isBlank()) {
+            if (line == null || line.trim().isEmpty()) {
                 continue;
             }
 
             String[] parts = line.split(",");
 
-            if (parts.length < 3) {
-                throw new RuntimeException("Invalid CSV line: " + line);
+            if (parts.length != 3) {
+                throw new RuntimeException("Invalid line format: " + line);
             }
 
-            FruitTransaction tx = new FruitTransaction();
-            tx.setOperation(FruitTransaction.Operation.fromCode(parts[0].trim()));
-            tx.setFruit(parts[1].trim());
-            tx.setQuantity(Integer.parseInt(parts[2].trim()));
+            FruitTransaction transaction = new FruitTransaction();
+            transaction.setOperation(parseOperation(parts[0]));
+            transaction.setFruit(parts[1]);
+            transaction.setQuantity(Integer.parseInt(parts[2]));
 
-            result.add(tx);
+            result.add(transaction);
         }
 
         return result;
+    }
+
+    private FruitTransaction.Operation parseOperation(String code) {
+        switch (code) {
+            case "b":
+                return FruitTransaction.Operation.BALANCE;
+            case "s":
+                return FruitTransaction.Operation.SUPPLY;
+            case "p":
+                return FruitTransaction.Operation.PURCHASE;
+            case "r":
+                return FruitTransaction.Operation.RETURN;
+            default:
+                throw new RuntimeException("Unknown operation: " + code);
+        }
     }
 }

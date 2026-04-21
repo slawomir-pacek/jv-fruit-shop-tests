@@ -48,4 +48,18 @@ class ReturnOperationTest {
         transaction.setQuantity(quantity);
         return transaction;
     }
+
+    @Test
+    void process_shouldIncreaseExistingFruit() {
+        Map<String, Integer> storage = new HashMap<>();
+        storage.put("banana", 5);
+
+        FruitTransaction tx = new FruitTransaction();
+        tx.setFruit("banana");
+        tx.setQuantity(3);
+
+        operation.process(tx, storage);
+
+        assertEquals(8, storage.get("banana"));
+    }
 }

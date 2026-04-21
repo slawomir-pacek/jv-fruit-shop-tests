@@ -10,9 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class SupplyOperationTest {
-    private static final String APPLE = "apple";
-    private static final int INITIAL_QUANTITY = 10;
-    private static final int SUPPLY_QUANTITY = 5;
 
     private SupplyOperation operation;
     private Map<String, Integer> storage;
@@ -24,28 +21,39 @@ class SupplyOperationTest {
     }
 
     @Test
-    void process_fruitExistsInStorage_shouldIncreaseStock() {
-        storage.put(APPLE, INITIAL_QUANTITY);
-        FruitTransaction transaction = createTransaction(APPLE, SUPPLY_QUANTITY);
+    void process_shouldIncreaseExistingValue() {
+        storage.put("apple", 10);
 
-        operation.process(transaction, storage);
+        FruitTransaction tx = create("apple", 5);
 
-        assertEquals(15, storage.get(APPLE));
+        operation.process(tx, storage);
+
+        assertEquals(15, storage.get("apple"));
     }
 
     @Test
-    void process_fruitAbsentInStorage_shouldAddFruitToStorage() {
-        FruitTransaction transaction = createTransaction(APPLE, SUPPLY_QUANTITY);
+    void process_shouldAddNewFruit() {
+        FruitTransaction tx = create("banana", 7);
 
-        operation.process(transaction, storage);
+        operation.process(tx, storage);
 
-        assertEquals(SUPPLY_QUANTITY, storage.get(APPLE));
+        assertEquals(7, storage.get("banana"));
     }
 
-    private FruitTransaction createTransaction(String fruit, int quantity) {
-        FruitTransaction transaction = new FruitTransaction();
-        transaction.setFruit(fruit);
-        transaction.setQuantity(quantity);
-        return transaction;
+    @Test
+    void process_shouldHandleNullInitialValue() {
+        FruitTransaction tx = create("kiwi", 3);
+
+        operation.process(tx, storage);
+
+        assertEquals(3, storage.get("kiwi"));
+    }
+
+    private FruitTransaction create(String fruit, int quantity) {
+        FruitTransaction tx = new FruitTransaction();
+        tx.setOperation(FruitTransaction.Operation.SUPPLY);
+        tx.setFruit(fruit);
+        tx.setQuantity(quantity);
+        return tx;
     }
 }

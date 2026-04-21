@@ -8,22 +8,15 @@ public class SupplyOperation implements OperationHandler {
 
     @Override
     public void process(FruitTransaction tx, Map<String, Integer> storage) {
-        if (tx == null || storage == null) {
-            throw new RuntimeException("Transaction and storage cannot be null");
-        }
-
         String fruit = tx.getFruit();
-
-        if (fruit == null || fruit.isBlank()) {
-            throw new RuntimeException("Fruit cannot be null or empty");
-        }
-
         int quantity = tx.getQuantity();
 
-        if (quantity <= 0) {
-            throw new RuntimeException("Quantity must be positive");
+        Integer current = storage.get(fruit);
+
+        if (current == null) {
+            current = 0;
         }
 
-        storage.put(fruit, storage.getOrDefault(fruit, 0) + quantity);
+        storage.put(fruit, current + quantity);
     }
 }

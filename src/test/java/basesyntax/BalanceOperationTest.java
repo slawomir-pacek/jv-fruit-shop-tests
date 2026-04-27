@@ -1,6 +1,7 @@
 package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.BalanceOperation;
@@ -24,7 +25,7 @@ class BalanceOperationTest {
     }
 
     @Test
-    void process_validTransaction_shouldSetNewBalance() {
+    void process_existingFruit_shouldReplaceBalance() {
         storage.put(APPLE, INITIAL_BALANCE);
 
         FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
@@ -43,23 +44,24 @@ class BalanceOperationTest {
         assertEquals(NEW_BALANCE, storage.get(APPLE));
     }
 
+    @Test
+    void process_nullTransaction_shouldThrowException() {
+        assertThrows(RuntimeException.class,
+                () -> operation.process(null, storage));
+    }
+
+    @Test
+    void process_nullStorage_shouldThrowException() {
+        FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
+
+        assertThrows(RuntimeException.class,
+                () -> operation.process(transaction, null));
+    }
+
     private FruitTransaction createTransaction(String fruit, int quantity) {
         FruitTransaction transaction = new FruitTransaction();
         transaction.setFruit(fruit);
         transaction.setQuantity(quantity);
         return transaction;
-    }
-
-    @Test
-    void process_shouldInitializeNewFruit() {
-        Map<String, Integer> storage = new HashMap<>();
-
-        FruitTransaction tx = new FruitTransaction();
-        tx.setFruit("apple");
-        tx.setQuantity(10);
-
-        operation.process(tx, storage);
-
-        assertEquals(10, storage.get("apple"));
     }
 }

@@ -1,6 +1,7 @@
 package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.basesyntax.io.CsvFileReaderImpl;
@@ -30,7 +31,7 @@ class CsvFileReaderImplTest {
     @Test
     void read_shouldReturnEmptyList_whenOnlyHeader() throws Exception {
         Path file = Files.createTempFile("test", ".csv");
-        Files.write(file, List.of("header"));
+        Files.write(file, List.of("type,fruit,quantity"));
 
         CsvFileReaderImpl reader = new CsvFileReaderImpl();
 
@@ -40,11 +41,11 @@ class CsvFileReaderImplTest {
     }
 
     @Test
-    void read_shouldSkipBlankLinesAndHeader() throws Exception {
+    void read_shouldSkipHeaderAndBlankLines() throws Exception {
         Path file = Files.createTempFile("test", ".csv");
 
         Files.write(file, List.of(
-                "header",
+                "type,fruit,quantity",
                 "b,apple,10",
                 "",
                 "   ",
@@ -56,5 +57,8 @@ class CsvFileReaderImplTest {
         List<String> result = reader.read(file.toString());
 
         assertEquals(2, result.size());
+        assertEquals("b,apple,10", result.get(0));
+        assertEquals("s,banana,5", result.get(1));
+        assertFalse(result.contains("type,fruit,quantity"));
     }
 }

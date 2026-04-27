@@ -1,6 +1,7 @@
 package basesyntax;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.basesyntax.model.FruitTransaction;
 import core.basesyntax.service.impl.ReturnOperation;
@@ -25,9 +26,9 @@ class ReturnOperationTest {
 
     @Test
     void process_fruitAbsentInStorage_shouldAddReturnedQuantity() {
-        FruitTransaction transaction = createTransaction(BANANA, RETURN_QUANTITY);
+        FruitTransaction tx = validTransaction(BANANA, RETURN_QUANTITY);
 
-        operation.process(transaction, storage);
+        operation.process(tx, storage);
 
         assertEquals(RETURN_QUANTITY, storage.get(BANANA));
     }
@@ -35,31 +36,31 @@ class ReturnOperationTest {
     @Test
     void process_fruitExistsInStorage_shouldIncreaseStock() {
         storage.put(BANANA, INITIAL_QUANTITY);
-        FruitTransaction transaction = createTransaction(BANANA, RETURN_QUANTITY);
+        FruitTransaction tx = validTransaction(BANANA, RETURN_QUANTITY);
 
-        operation.process(transaction, storage);
+        operation.process(tx, storage);
 
         assertEquals(15, storage.get(BANANA));
     }
 
-    private FruitTransaction createTransaction(String fruit, int quantity) {
-        FruitTransaction transaction = new FruitTransaction();
-        transaction.setFruit(fruit);
-        transaction.setQuantity(quantity);
-        return transaction;
+    @Test
+    void process_nullTransaction_shouldThrowException() {
+        assertThrows(RuntimeException.class,
+                () -> operation.process(null, storage));
     }
 
     @Test
-    void process_shouldIncreaseExistingFruit() {
-        Map<String, Integer> storage = new HashMap<>();
-        storage.put("banana", 5);
+    void process_nullStorage_shouldThrowException() {
+        FruitTransaction tx = validTransaction(BANANA, RETURN_QUANTITY);
 
+        assertThrows(RuntimeException.class,
+                () -> operation.process(tx, null));
+    }
+
+    private FruitTransaction validTransaction(String fruit, int quantity) {
         FruitTransaction tx = new FruitTransaction();
-        tx.setFruit("banana");
-        tx.setQuantity(3);
-
-        operation.process(tx, storage);
-
-        assertEquals(8, storage.get("banana"));
+        tx.setFruit(fruit);
+        tx.setQuantity(quantity);
+        return tx;
     }
 }

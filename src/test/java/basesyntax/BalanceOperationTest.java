@@ -27,27 +27,21 @@ class BalanceOperationTest {
     @Test
     void process_existingFruit_shouldReplaceBalance() {
         storage.put(APPLE, INITIAL_BALANCE);
-
         FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
-
         operation.process(transaction, storage);
-
         assertEquals(NEW_BALANCE, storage.get(APPLE));
     }
 
     @Test
     void process_newFruit_shouldAddFruitToStorage() {
         FruitTransaction transaction = createTransaction(APPLE, NEW_BALANCE);
-
         operation.process(transaction, storage);
-
         assertEquals(NEW_BALANCE, storage.get(APPLE));
     }
 
     @Test
     void process_nullTransaction_shouldThrowException() {
-        assertThrows(RuntimeException.class,
-                () -> operation.process(null, storage));
+        assertThrows(RuntimeException.class, () -> operation.process(null, storage));
     }
 
     @Test
@@ -62,6 +56,7 @@ class BalanceOperationTest {
         FruitTransaction transaction = new FruitTransaction();
         transaction.setFruit(fruit);
         transaction.setQuantity(quantity);
+        transaction.setOperation(FruitTransaction.Operation.BALANCE);
         return transaction;
     }
 }

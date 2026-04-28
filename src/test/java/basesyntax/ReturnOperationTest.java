@@ -45,16 +45,20 @@ class ReturnOperationTest {
 
     @Test
     void process_nullTransaction_shouldThrowException() {
-        assertThrows(RuntimeException.class,
+        RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> operation.process(null, storage));
+
+        assertEquals("Transaction and storage cannot be null", exception.getMessage());
     }
 
     @Test
     void process_nullStorage_shouldThrowException() {
         FruitTransaction tx = validTransaction(BANANA, RETURN_QUANTITY);
 
-        assertThrows(RuntimeException.class,
+        RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> operation.process(tx, null));
+
+        assertEquals("Transaction and storage cannot be null", exception.getMessage());
     }
 
     private FruitTransaction validTransaction(String fruit, int quantity) {

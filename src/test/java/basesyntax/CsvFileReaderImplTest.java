@@ -1,7 +1,7 @@
 package basesyntax;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import core.basesyntax.io.CsvFileReaderImpl;
@@ -56,9 +56,11 @@ class CsvFileReaderImplTest {
 
         List<String> result = reader.read(file.toString());
 
+        assertTrue(result.stream()
+                .noneMatch(line -> line.startsWith("type")));
+
         assertEquals(2, result.size());
         assertEquals("b,apple,10", result.get(0));
         assertEquals("s,banana,5", result.get(1));
-        assertFalse(result.contains("type,fruit,quantity"));
     }
 }

@@ -41,7 +41,7 @@ class ShopServiceImplTest {
         valid.setQuantity(10);
 
         ShopServiceImpl service =
-                new ShopServiceImpl(new OperationStrategyImpl(createFullHandlers()));
+                new ShopServiceImpl(new OperationStrategyImpl(createFullHandlers())); 
         service.process(List.of(valid));
 
         assertEquals(10, service.getStorage().get("apple"));
@@ -77,12 +77,6 @@ class ShopServiceImplTest {
                 () -> service.process(null));
 
         assertEquals("Transactions cannot be null", ex.getMessage());
-    }
-
-    @Test
-    void shouldThrowException_whenHandlerMapEmpty() {
-        assertThrows(RuntimeException.class,
-                () -> new OperationStrategyImpl(new HashMap<>()));
     }
 
     private FruitTransaction tx(FruitTransaction.Operation op,

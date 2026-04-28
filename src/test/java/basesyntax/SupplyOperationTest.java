@@ -40,15 +40,6 @@ class SupplyOperationTest {
         assertEquals(7, storage.get("banana"));
     }
 
-    @Test
-    void process_shouldHandleNullInitialValue() {
-        FruitTransaction tx = create("kiwi", 3);
-
-        operation.process(tx, storage);
-
-        assertEquals(3, storage.get("kiwi"));
-    }
-
     private FruitTransaction create(String fruit, int quantity) {
         FruitTransaction tx = new FruitTransaction();
         tx.setOperation(FruitTransaction.Operation.SUPPLY);

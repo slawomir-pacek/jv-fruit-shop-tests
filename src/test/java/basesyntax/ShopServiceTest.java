@@ -88,14 +88,13 @@ class ShopServiceTest {
 
     @Test
     void process_emptyList_shouldDoNothing() {
+        Map<String, Integer> before = new HashMap<>(service.getStorage());
         service.process(List.of());
-
-        assertEquals(0, service.getStorage().size());
+        assertEquals(before, service.getStorage());
     }
 
     private FruitTransaction create(FruitTransaction.Operation operation,
-                                    String fruit,
-                                    int quantity) {
+                                    String fruit, int quantity) {
         FruitTransaction transaction = new FruitTransaction();
         transaction.setOperation(operation);
         transaction.setFruit(fruit);

@@ -29,11 +29,5 @@ class OperationStrategyImplTest {
         assertThrows(RuntimeException.class,
                 () -> new OperationStrategyImpl(new HashMap<>()));
     }
-
-    @Test
-    void shouldThrowException_whenHandlerMapEmpty() {
-        assertThrows(RuntimeException.class,
-                () -> new OperationStrategyImpl(new HashMap<>()));
-    }
 }
 

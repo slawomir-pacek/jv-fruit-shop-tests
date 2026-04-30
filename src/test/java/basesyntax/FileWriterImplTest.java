@@ -53,7 +53,6 @@ class FileWriterImplTest {
     void shouldThrowException_whenFileCannotBeWritten() {
         FileWriterImpl writer = new FileWriterImpl();
 
-        // folder zamiast pliku → IOException branch
         File invalidFile = new File("non_existing_dir/file.txt");
 
         assertThrows(RuntimeException.class,

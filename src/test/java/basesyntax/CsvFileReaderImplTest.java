@@ -1,8 +1,8 @@
 package basesyntax;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import core.basesyntax.io.CsvFileReaderImpl;
 import java.nio.file.Files;

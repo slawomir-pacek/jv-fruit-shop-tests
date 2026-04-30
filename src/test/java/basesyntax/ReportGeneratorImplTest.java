@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 class ReportGeneratorImplTest {
 
     @Test
-    void shouldGenerateReport_whenStorageEmpty() {
+    void getReport_emptyStorage_ok() {
         Map<String, Integer> storage = new HashMap<>();
 
         ReportGeneratorImpl generator = new ReportGeneratorImpl(storage);
@@ -19,7 +19,7 @@ class ReportGeneratorImplTest {
     }
 
     @Test
-    void shouldGenerateReport_whenStorageHasData() {
+    void getReport_notEmptyStorage_ok() {
         Map<String, Integer> storage = new HashMap<>();
         storage.put("apple", 10);
 
@@ -27,6 +27,7 @@ class ReportGeneratorImplTest {
 
         String report = generator.getReport();
 
-        assertEquals(true, report.contains("apple,10"));
+        String expected = "fruit,quantity\napple,10\n";
+        assertEquals(expected, generator.getReport());
     }
 }
